@@ -1,0 +1,1 @@
+# rischy.assessment-generator
