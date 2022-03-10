@@ -16,6 +16,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// ToDo: Add Https endpoint back in applicationUrl launchSettings to enable https
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
