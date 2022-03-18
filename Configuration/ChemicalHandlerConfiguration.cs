@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 namespace rischy.assessment_generator.Configuration
 {
     public record ChemicalHandlerConfiguration

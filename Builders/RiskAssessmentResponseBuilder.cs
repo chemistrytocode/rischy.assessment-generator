@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using rischy.assessment_generator.Mappers;
 using rischy.assessment_generator.Models;
 
@@ -24,23 +25,23 @@ namespace rischy.assessment_generator.Builders
         
         // Builder pattern FTW!.
         // TODO: Pass chemicals to dynamically generate payloads, prototype is currently returning hard coded responses.
-        public RiskAssessmentResponseBuilder WithChemicalHazardTable()
+        public RiskAssessmentResponseBuilder WithChemicalHazardTable(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var mappedChemicalHazardTable = _hazardTableMapper.Map();
+            var mappedChemicalHazardTable = _hazardTableMapper.Map(chemicalData);
             _riskAssessment.HazardTableChemicals = mappedChemicalHazardTable;
             return this;
         }
         
-        public RiskAssessmentResponseBuilder WithControlMeasures()
+        public RiskAssessmentResponseBuilder WithControlMeasures(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var mappedControlMeasures = _controlMeasuresMapper.Map();
+            var mappedControlMeasures = _controlMeasuresMapper.Map(chemicalData);
             _riskAssessment.ControlMeasures = mappedControlMeasures;
             return this;
         }
-        
-        public RiskAssessmentResponseBuilder WithEmergencyProcedures()
+
+        public RiskAssessmentResponseBuilder WithEmergencyProcedures(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var mappedEmergencyResponses = _emergencyActionsMapper.Map();
+            var mappedEmergencyResponses = _emergencyActionsMapper.Map(chemicalData);
             _riskAssessment.EmergencyActions = mappedEmergencyResponses;
             return this;
         }

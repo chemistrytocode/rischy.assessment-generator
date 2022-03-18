@@ -1,31 +1,37 @@
 using System.Collections.Generic;
+using System.Linq;
+using rischy.assessment_generator.Constants;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
 {
     public class EmergencyActionsMapper
     {
-        public EmergencyActionsMapper() {}
+        public EmergencyActionsMapper() { }
 
-        public IEnumerable<EmergencyAction> Map()
+        public IEnumerable<EmergencyAction> Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var listofEmergencyProcedures = new List<EmergencyAction>();
+            var emergencyActions = new List<EmergencyAction>();
 
-            AddEmergencyAction(listofEmergencyProcedures);
+            AddEmergencyAction(emergencyActions, chemicalData);
 
-            return listofEmergencyProcedures;
+            return emergencyActions.Distinct();
         }
 
-        private static void AddEmergencyAction(ICollection<EmergencyAction> listofEmergencyProcedures)
+        private static void AddEmergencyAction(ICollection<EmergencyAction> emergencyActions,
+            IEnumerable<ChemicalHandler> chemicalData)
         {
-            // Prototype is hardcoded
-            var action = new EmergencyAction
+            chemicalData.ToList().ForEach(chemical =>
             {
-                Emergency = "In the eye",
-                Action = "Flood the eye for 10 minutes with water"
-            };
-            
-            listofEmergencyProcedures.Add(action);
+                chemical.EmergencyActions?.ToList().ForEach(action =>
+                {
+                    emergencyActions.Add(new EmergencyAction
+                    {
+                        Emergency = action.Emergency,
+                        Action = action.Action
+                    });
+                });
+            });
         }
     }
 }
