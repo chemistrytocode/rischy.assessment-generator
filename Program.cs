@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using rischy.assessment_generator.Builders;
 using rischy.assessment_generator.Configuration;
+using rischy.assessment_generator.Mappers;
 using rischy.assessment_generator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.Configure<ChemicalHandlerConfiguration>(
      builder.Configuration.GetSection("ChemicalHandlerSettings"));
 
-// Add services
+// Add clients
 builder.Services.AddHttpClient<ChemicalHandlerService>();
+
+// Add services
+builder.Services.AddScoped<RiskAssessmentService>();
+builder.Services.AddSingleton<ControlMeasuresMapper>();
+builder.Services.AddSingleton<EmergencyActionsMapper>();
+builder.Services.AddSingleton<HazardTableMapper>();
+builder.Services.AddScoped<RiskAssessmentResponseBuilder>();
 
 // Add controllers
 builder.Services.AddControllers();
