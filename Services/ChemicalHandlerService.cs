@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using rischy.assessment_generator.Configuration;
 using rischy.assessment_generator.Models;
@@ -39,11 +37,11 @@ namespace rischy.assessment_generator.Services
         }
         
 
-        public async Task<IEnumerable<Chemical>> GetHazardData(CancellationToken cancellationToken)
+        public async Task<IEnumerable<ChemicalHandler>> GetHazardData(CancellationToken cancellationToken)
         {
             var response = await CallChemicalHandler(_chemicalHandlerConfiguration.HazardEndpoint, cancellationToken);
             var data = await response.Content.ReadAsStringAsync(cancellationToken);
-            var hazardData = JsonConvert.DeserializeObject<IEnumerable<Chemical>>(data);
+            var hazardData = JsonConvert.DeserializeObject<IEnumerable<ChemicalHandler>>(data);
 
             if (hazardData == null || !hazardData.Any())
             {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
@@ -7,27 +8,30 @@ namespace rischy.assessment_generator.Mappers
     {
         public HazardTableMapper() {}
         
-        public IEnumerable<HazardTableChemical> Map()
+        public IEnumerable<BaseChemical> Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var listOfChemicals = new List<HazardTableChemical>();
+            var listOfChemicals = new List<BaseChemical>();
 
-            AddChemicalsToHazardTable(listOfChemicals);
+            AddChemicalsToHazardTable(listOfChemicals, chemicalData);
 
             return listOfChemicals;
         }
-
-        private static void AddChemicalsToHazardTable(ICollection<HazardTableChemical> listOfChemicals)
+        
+        private static void AddChemicalsToHazardTable(
+            ICollection<BaseChemical> listOfChemicals, 
+            IEnumerable<ChemicalHandler> chemicalData)
         {
-            // Prototype is hardcoded
-            var chemical = new HazardTableChemical
+            chemicalData.ToList().ForEach(chemical =>
             {
-                Name = "Barium Chloride",
-                State = "Solid",
-                Hazard = new List<string>() {"Toxic "},
-                Comment = "Harmful if swallowed"
-            };
-            
-            listOfChemicals.Add(chemical);
+                listOfChemicals.Add(new BaseChemical
+                {        
+                    Name = chemical.Name,
+                    State = chemical.State,
+                    Concentration = chemical.Concentration,
+                    Hazard = chemical.Hazard?.ToList(),
+                    Comment = chemical.Comment
+                });
+            });
         }
     }
 }
