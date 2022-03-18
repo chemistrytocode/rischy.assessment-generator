@@ -17,9 +17,9 @@ namespace rischy.assessment_generator.Mappers
             return listOfChemicals;
         }
         
-        // 1st Iteration
-        // TODO Add chemical names to Control Measures string in next iteration
-        private static void AddChemicalsToHazardTable(ICollection<BaseChemical> listOfChemicals, IEnumerable<ChemicalHandler> chemicalData)
+        private static void AddChemicalsToHazardTable(
+            ICollection<BaseChemical> listOfChemicals, 
+            IEnumerable<ChemicalHandler> chemicalData)
         {
             chemicalData.ToList().ForEach(chemical =>
             {

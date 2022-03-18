@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using rischy.assessment_generator.Constants;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
@@ -17,7 +16,9 @@ namespace rischy.assessment_generator.Mappers
 
             return emergencyActions.Distinct();
         }
-
+        
+        // TODO Refactor this in 2nd iteration.
+        // Double loops is bad with a capital Big-O
         private static void AddEmergencyAction(ICollection<EmergencyAction> emergencyActions,
             IEnumerable<ChemicalHandler> chemicalData)
         {
