@@ -13,12 +13,10 @@ namespace rischy.assessment_generator.Controllers
         
         public StockController(RiskAssessmentService riskAssessmentService) => _riskAssessmentService = riskAssessmentService;
         
-        // 1st Iteration
-        // Todo: Return a targeted list of chemicals
         [HttpGet(Name = "FabricateRiskAssessment")]
-        public async Task<IActionResult> GetAllHazards(CancellationToken cancellationToken)
+        public async Task<IActionResult> FabricateRiskAssessment(string chemicalIds, CancellationToken cancellationToken)
         {
-            return await _riskAssessmentService.FabricateRiskAssessment(cancellationToken);
+            return await _riskAssessmentService.FabricateRiskAssessment(chemicalIds, cancellationToken);
         }
     }
 }

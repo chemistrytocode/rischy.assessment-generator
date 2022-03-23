@@ -19,10 +19,9 @@ namespace rischy.assessment_generator.Services
             _riskAssessmentResponseBuilder = riskAssessmentResponseBuilder;
         }
 
-        public async Task<IActionResult> FabricateRiskAssessment(CancellationToken cancellationToken)
+        public async Task<IActionResult> FabricateRiskAssessment(string encryptedChemicalIds, CancellationToken cancellationToken)
         {
-            // TODO: Currently getting ALL data, targeting chemicals goal of 2nd iteration
-            var hazardData = await _chemicalHandlerService.GetHazardData(cancellationToken);
+            var hazardData = await _chemicalHandlerService.GetHazardData(encryptedChemicalIds, cancellationToken);
 
             var riskAssessmentResponse = _riskAssessmentResponseBuilder
                 .WithChemicalHazardTable(hazardData)
