@@ -2,7 +2,7 @@ namespace rischy.assessment_generator.Constants
 {
     public static class EmergencyActionConstants
     {
-        // Applies to every practical, special actions to follow
+        // Applies to every practical
         public const string InTheEyeEmergency = "In the eye";
         public const string InTheEyeAction = "IRRIGATE";
         public const string InTheEyeActionSubText = "(with water for at least 20 minutes)";

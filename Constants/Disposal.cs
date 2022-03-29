@@ -1,6 +1,6 @@
 namespace rischy.assessment_generator.Constants
 {
-    public static class DisposalCodeConstants
+    public static class DisposalConstants
     {
         public const string W1Key = "W1";
         public const string W1Disposal = "Store for removal by a Registered Waste Carrier";
