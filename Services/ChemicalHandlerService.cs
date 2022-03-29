@@ -13,20 +13,17 @@ namespace rischy.assessment_generator.Services
     public class ChemicalHandlerService
     {
         private readonly HttpClient _chemicalHandlerClient;
-        private readonly ChemicalHandlerConfiguration _chemicalHandlerConfiguration;
         
         public ChemicalHandlerService(HttpClient chemicalHandlerClient)
         {
             _chemicalHandlerClient = chemicalHandlerClient;
-            _chemicalHandlerConfiguration = new ChemicalHandlerConfiguration();
         }
 
-        private async Task<HttpResponseMessage> CallChemicalHandler(string uri, CancellationToken cancellationToken)
+        private async Task<HttpResponseMessage> CallChemicalHandler(string uri, string encryptedChemicalIds, CancellationToken cancellationToken)
         {
-            var endpoint = $"{_chemicalHandlerConfiguration.Uri}{uri}";
+            var endpoint = $"{ChemicalHandlerConfiguration.Uri}{uri}?ids={encryptedChemicalIds}";
             
-            var response = await _chemicalHandlerClient
-                .GetAsync(endpoint, cancellationToken);
+            var response = await _chemicalHandlerClient.GetAsync(endpoint, cancellationToken);
 
             if (response.IsSuccessStatusCode)
             {
@@ -36,10 +33,9 @@ namespace rischy.assessment_generator.Services
             throw new Exception($"Request returned a bad response: {response.StatusCode}");
         }
         
-
-        public async Task<IEnumerable<ChemicalHandler>> GetHazardData(CancellationToken cancellationToken)
+        public async Task<IEnumerable<ChemicalHandler>> GetHazardData(string encryptedChemicalIds, CancellationToken cancellationToken)
         {
-            var response = await CallChemicalHandler(_chemicalHandlerConfiguration.HazardEndpoint, cancellationToken);
+            var response = await CallChemicalHandler(ChemicalHandlerConfiguration.HazardsEndpoint, encryptedChemicalIds, cancellationToken);
             var data = await response.Content.ReadAsStringAsync(cancellationToken);
             var hazardData = JsonConvert.DeserializeObject<IEnumerable<ChemicalHandler>>(data);
 
