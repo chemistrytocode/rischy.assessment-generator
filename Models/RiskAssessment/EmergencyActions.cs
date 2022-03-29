@@ -6,7 +6,7 @@ namespace rischy.assessment_generator.Models
     {
         public IEnumerable<EmergencyAction> DefaultEmergencyActions { get; set; }
         
-        public IEnumerable<EmergencyAction>? SpecialEmergencyActions { get; set; }
+        public IEnumerable<SpecialEmergencyActions>? SpecialEmergencyActions { get; set; }
         
         public string EscalationStatement { get; set; }
  

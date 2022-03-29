@@ -7,8 +7,6 @@ namespace rischy.assessment_generator.Mappers
 {
     public class EmergencyActionsMapper
     {
-        public EmergencyActionsMapper() { }
-
         public EmergencyActions Map(IEnumerable<ChemicalHandler> chemicalData)
         {
             return new EmergencyActions()
@@ -32,13 +30,11 @@ namespace rischy.assessment_generator.Mappers
                 new EmergencyAction()
                 {
                     Emergency = EmergencyActionConstants.InTheMouthText,
-                    EmergencySubtext = null,
                     Action = EmergencyActionConstants.InTheMouthNotes
                 },
                 new EmergencyAction()
                 {
                     Emergency = EmergencyActionConstants.InhaledText,
-                    EmergencySubtext = null,
                     Action = EmergencyActionConstants.InhaledNotes
                 },
                 new EmergencyAction()
@@ -50,26 +46,41 @@ namespace rischy.assessment_generator.Mappers
             };
         }
 
-        private static IEnumerable<EmergencyAction> AddSpecialEmergencyActions(
+        private static IEnumerable<SpecialEmergencyActions>? AddSpecialEmergencyActions(
             IEnumerable<ChemicalHandler> chemicalData)
         {
-            var specialEmergencyActions = new List<EmergencyAction>();
+            var specialEmergencyActions = new List<SpecialEmergencyActions>();
                 
             chemicalData.ToList().ForEach(chemical =>
             {
-                chemical.EmergencyActions?.ToList().ForEach(action =>
+                if (chemical.EmergencyActions != null && chemical.EmergencyActions.Any())
                 {
-                    specialEmergencyActions.Add(new EmergencyAction()
+                    specialEmergencyActions.Add(new SpecialEmergencyActions()
                     {
                         Chemical = chemical.Name,
-                        Emergency = action.Emergency,
-                        EmergencySubtext = action.EmergencySubtext,
-                        Action = action.Action
+                        SpecialEmergencyAction = MapEmergencyActionsForChemical(chemical)
                     });
+                }
+            });
+
+            return specialEmergencyActions.Any() ? specialEmergencyActions : null;
+        }
+
+        private static IEnumerable<EmergencyAction> MapEmergencyActionsForChemical(ChemicalHandler chemical)
+        {
+            var chemicalEmergencyActions = new List<EmergencyAction>();
+            
+            chemical.EmergencyActions?.ToList().ForEach(emergencyAction =>
+            {
+                chemicalEmergencyActions.Add(new EmergencyAction()
+                {
+                    Emergency = emergencyAction.Emergency,
+                    EmergencySubtext = emergencyAction.EmergencySubtext,
+                    Action = emergencyAction.Action
                 });
             });
-            
-            return specialEmergencyActions;
+
+            return chemicalEmergencyActions;
         }
     }
 }
