@@ -12,7 +12,7 @@ namespace rischy.assessment_generator.Mappers
             return new EmergencyActions()
             {
                 DefaultEmergencyActions = AddDefaultEmergencyActions(),
-                SpecialEmergencyActions = AddSpecialEmergencyActions(chemicalData),
+                ChemicalEmergencyActions = AddChemicalEmergencyActions(chemicalData),
                 EscalationStatement = EmergencyActionConstants.EscalationStatement
             };
         }
@@ -23,42 +23,47 @@ namespace rischy.assessment_generator.Mappers
             {
                 new EmergencyAction()
                 {
-                    Emergency = EmergencyActionConstants.InTheEyeText,
-                    EmergencySubtext = EmergencyActionConstants.InTheEyeSubtext,
-                    Action = EmergencyActionConstants.InhaledNotes
+                    Emergency = EmergencyActionConstants.InTheEyeEmergency,
+                    Action = EmergencyActionConstants.InTheEyeAction,
+                    ActionSubText = EmergencyActionConstants.InTheEyeActionSubText,
+                    ActionNotes = EmergencyActionConstants.InTheEyeNotes
                 },
                 new EmergencyAction()
                 {
-                    Emergency = EmergencyActionConstants.InTheMouthText,
-                    Action = EmergencyActionConstants.InTheMouthNotes
+                    Emergency = EmergencyActionConstants.InTheMouthEmergency,
+                    Action = EmergencyActionConstants.InTheMouthAction,
+                    ActionNotes = EmergencyActionConstants.InTheMouthNotes
                 },
                 new EmergencyAction()
                 {
-                    Emergency = EmergencyActionConstants.InhaledText,
-                    Action = EmergencyActionConstants.InhaledNotes
+                    Emergency = EmergencyActionConstants.InhaledEmergency,
+                    Action = EmergencyActionConstants.InhaledAction,
+                    ActionSubText = EmergencyActionConstants.InhaledActionSubText,
+                    ActionNotes = EmergencyActionConstants.InhaledNotes
                 },
                 new EmergencyAction()
                 {
-                    Emergency = EmergencyActionConstants.OnTheSkinText,
-                    EmergencySubtext = EmergencyActionConstants.OnTheSkinSubtext,
-                    Action = EmergencyActionConstants.OnTheSkinText
+                    Emergency = EmergencyActionConstants.OnTheSkinEmergency,
+                    Action = EmergencyActionConstants.OnTheSkinAction,
+                    ActionSubText = EmergencyActionConstants.OnTheSkinActionSubtext,
+                    ActionNotes = EmergencyActionConstants.OnTheSkinNotes
                 }
             };
         }
 
-        private static IEnumerable<SpecialEmergencyActions>? AddSpecialEmergencyActions(
+        private static IEnumerable<ChemicalEmergencyAction>? AddChemicalEmergencyActions(
             IEnumerable<ChemicalHandler> chemicalData)
         {
-            var specialEmergencyActions = new List<SpecialEmergencyActions>();
+            var specialEmergencyActions = new List<ChemicalEmergencyAction>();
                 
             chemicalData.ToList().ForEach(chemical =>
             {
                 if (chemical.EmergencyActions != null && chemical.EmergencyActions.Any())
                 {
-                    specialEmergencyActions.Add(new SpecialEmergencyActions()
+                    specialEmergencyActions.Add(new ChemicalEmergencyAction()
                     {
                         Chemical = chemical.Name,
-                        SpecialEmergencyAction = MapEmergencyActionsForChemical(chemical)
+                        ChemicalEmergencyActions = MapEmergencyActionsForChemical(chemical)
                     });
                 }
             });
@@ -75,8 +80,9 @@ namespace rischy.assessment_generator.Mappers
                 chemicalEmergencyActions.Add(new EmergencyAction()
                 {
                     Emergency = emergencyAction.Emergency,
-                    EmergencySubtext = emergencyAction.EmergencySubtext,
-                    Action = emergencyAction.Action
+                    Action = emergencyAction.Action,
+                    ActionSubText = emergencyAction.ActionSubText,
+                    ActionNotes = emergencyAction.ActionNotes
                 });
             });
 

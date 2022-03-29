@@ -3,21 +3,25 @@ namespace rischy.assessment_generator.Constants
     public static class EmergencyActionConstants
     {
         // Applies to every practical, special actions to follow
-        public static readonly string InTheEyeText = "IRRIGATE";
-        public static readonly string InTheEyeSubtext = "(with water for at least 20 minutes)";
-        public static readonly string InTheEyeNotes = "Irrigate regardless, eye damage may still occur in the absence of obvious symptoms";
-        
-        public static readonly string InTheMouthText = "RINSE and SPIT";
-        public static readonly string InTheMouthNotes = "Do not swallow or induce vomiting";
+        public const string InTheEyeEmergency = "In the eye";
+        public const string InTheEyeAction = "IRRIGATE";
+        public const string InTheEyeActionSubText = "(with water for at least 20 minutes)";
+        public const string InTheEyeNotes = "Always irrigate regardless, eye damage may still occur in the absence of obvious symptoms";
 
-        public static readonly string InhaledText = "MOVE TO FRESH AIR";
-        public static readonly string InhaledNotes = "Evacuate and/or ventilate the area if neccessary";
+        public const string InTheMouthEmergency = "In the mouth";
+        public const string InTheMouthAction = "RINSE and SPIT";
+        public const string InTheMouthNotes = "Do not swallow or induce vomiting";
 
-        public static readonly string OnTheSkinText = "IRRIGATE";
-        public static readonly string OnTheSkinSubtext = "(with water for at least 20 minutes)";
-        public static readonly string OnTheSkinNotes = "In addition wipe/brush off excess and remove contaminated clothing or jewellery";
+        public const string InhaledEmergency = "Inhaled";
+        public const string InhaledAction = "MOVE TO FRESH AIR";
+        public const string InhaledActionSubText = "(Sit down/support)";
+        public const string InhaledNotes = "Evacuate and/or ventilate the area if neccessary";
 
-        public static readonly string EscalationStatement = "If any symptoms from the result of using chemicals appear call severe call 111/999";
+        public const string OnTheSkinEmergency = "On the skin";
+        public const string OnTheSkinAction = "IRRIGATE";
+        public const string OnTheSkinActionSubtext = "(with water for at least 20 minutes)";
+        public const string OnTheSkinNotes = "In addition wipe/brush off excess and remove contaminated clothing or jewellery";
 
+        public const string EscalationStatement = "If any symptoms from the result of using chemicals appear call severe call 111/999";
     }
 }
