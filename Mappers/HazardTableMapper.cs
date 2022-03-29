@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using rischy.assessment_generator.Constants;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
@@ -28,8 +29,8 @@ namespace rischy.assessment_generator.Mappers
                     Name = chemical.Name,
                     State = chemical.State,
                     Concentration = chemical.Concentration,
-                    Hazard = chemical.Hazard?.ToList(),
-                    Comment = chemical.Comment
+                    Hazard = chemical.Hazard?.ToList() ?? new List<string>() { HazardConstants.LowHazard },
+                    Comment = chemical.Comment ?? HazardConstants.NoNotableHazard,
                 });
             });
         }
