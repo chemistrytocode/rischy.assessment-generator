@@ -20,6 +20,7 @@ builder.Services.AddScoped<RiskAssessmentService>();
 builder.Services.AddSingleton<ControlMeasuresMapper>();
 builder.Services.AddSingleton<EmergencyActionsMapper>();
 builder.Services.AddSingleton<HazardTableMapper>();
+builder.Services.AddSingleton<DisposalRecommendationsMapper>();
 builder.Services.AddScoped<RiskAssessmentResponseBuilder>();
 
 // Add controllers

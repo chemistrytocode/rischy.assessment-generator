@@ -7,5 +7,6 @@ namespace rischy.assessment_generator.Models
         public IEnumerable<BaseChemical>? HazardTableChemicals { get; set; }
         public IEnumerable<ControlMeasure>? ControlMeasures { get; set; }
         public EmergencyActions? EmergencyActions { get; set; }
+        public IEnumerable<DisposalRecommendation>? DisposalRecommendations { get; set; }
     }
 }
