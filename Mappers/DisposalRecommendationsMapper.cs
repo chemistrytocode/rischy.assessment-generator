@@ -9,41 +9,41 @@ namespace rischy.assessment_generator.Mappers
     {
         public IEnumerable<DisposalRecommendation> Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var disposalMeasures = new List<DisposalRecommendation>()
-            {
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W1Key, DisposalCodeConstants.W1Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W2Key, DisposalCodeConstants.W2Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W3Key, DisposalCodeConstants.W3Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W4Key, DisposalCodeConstants.W4Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W5Key, DisposalCodeConstants.W5Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W6Key, DisposalCodeConstants.W6Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W7Key, DisposalCodeConstants.W7Disposal, chemicalData),
-                MapChemicalsToDisposalMethod(DisposalCodeConstants.W8Key, DisposalCodeConstants.W8Disposal, chemicalData),
-            };
+            var disposalMeasures = new List<DisposalRecommendation>();
+            
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W1Key, DisposalCodeConstants.W1Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W2Key, DisposalCodeConstants.W2Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W3Key, DisposalCodeConstants.W3Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W4Key, DisposalCodeConstants.W4Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W5Key, DisposalCodeConstants.W5Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W6Key, DisposalCodeConstants.W6Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W7Key, DisposalCodeConstants.W7Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToDisposalMethod(DisposalCodeConstants.W8Key, DisposalCodeConstants.W8Disposal, disposalMeasures, chemicalData);
+            MapChemicalsToSpecialDisposalMethods(disposalMeasures, chemicalData);
 
-            MapChemicalsToSpecialDisposalMethod(disposalMeasures, chemicalData);
-
-            return disposalMeasures.Where(disposalMeasure => disposalMeasure != null);
+            return disposalMeasures;
         }
 
-        private static DisposalRecommendation? MapChemicalsToDisposalMethod(
+        private static void MapChemicalsToDisposalMethod(
             string disposalKey,
-            string disposalInstructions,
+            string disposalInstruction,
+            ICollection<DisposalRecommendation> disposalRecommendations,
             IEnumerable<ChemicalHandler> chemicalData)
         {
             var chemicalsWithDisposalKey = FindChemicalsThatMatchKey(disposalKey, chemicalData);
 
-            return chemicalsWithDisposalKey.Any()
-                ? new DisposalRecommendation()
+            if (chemicalsWithDisposalKey.Any())
+            {
+                disposalRecommendations.Add(new DisposalRecommendation()
                 {
                     Key = disposalKey,
-                    Instructions = disposalInstructions,
+                    Instructions = disposalInstruction,
                     Chemicals = chemicalsWithDisposalKey.Select(chemical => chemical.Name)
-                }
-                : null;
+                });
+            }
         }
-
-        private static void MapChemicalsToSpecialDisposalMethod(
+        
+        private static void MapChemicalsToSpecialDisposalMethods(
             ICollection<DisposalRecommendation> disposalRecommendations,
             IEnumerable<ChemicalHandler> chemicalData)
         {
@@ -62,6 +62,5 @@ namespace rischy.assessment_generator.Mappers
 
         private static IEnumerable<ChemicalHandler> FindChemicalsThatMatchKey(string disposalKey, IEnumerable<ChemicalHandler> chemicalData) 
             => chemicalData.Where(chemical => chemical.Disposal.Codes.Contains(disposalKey));
-
     }
 }
