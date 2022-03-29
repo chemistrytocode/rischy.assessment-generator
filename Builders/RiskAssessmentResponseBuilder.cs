@@ -39,7 +39,7 @@ namespace rischy.assessment_generator.Builders
             return this;
         }
 
-        public RiskAssessmentResponseBuilder WithEmergencyProcedures(IEnumerable<ChemicalHandler> chemicalData)
+        public RiskAssessmentResponseBuilder WithEmergencyActions(IEnumerable<ChemicalHandler> chemicalData)
         {
             var mappedEmergencyResponses = _emergencyActionsMapper.Map(chemicalData);
             _riskAssessment.EmergencyActions = mappedEmergencyResponses;

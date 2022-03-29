@@ -17,7 +17,7 @@ namespace rischy.assessment_generator.Constants
         public static readonly string OnTheSkinSubtext = "(with water for at least 20 minutes)";
         public static readonly string OnTheSkinNotes = "In addition wipe/brush off excess and remove contaminated clothing or jewellery";
 
-        public static readonly string EmergencyServicesStatement = "If symptoms appear call severe call 111/999";
+        public static readonly string EscalationStatement = "If any symptoms from the result of using chemicals appear call severe call 111/999";
 
     }
 }

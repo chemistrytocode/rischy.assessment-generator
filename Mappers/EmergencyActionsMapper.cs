@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using rischy.assessment_generator.Constants;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
@@ -8,31 +9,67 @@ namespace rischy.assessment_generator.Mappers
     {
         public EmergencyActionsMapper() { }
 
-        public IEnumerable<EmergencyAction> Map(IEnumerable<ChemicalHandler> chemicalData)
+        public EmergencyActions Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var emergencyActions = new List<EmergencyAction>();
-
-            AddEmergencyAction(emergencyActions, chemicalData);
-
-            return emergencyActions.Distinct();
+            return new EmergencyActions()
+            {
+                DefaultEmergencyActions = AddDefaultEmergencyActions(),
+                SpecialEmergencyActions = AddSpecialEmergencyActions(chemicalData),
+                EscalationStatement = EmergencyActionConstants.EscalationStatement
+            };
         }
-        
-        // TODO Refactor this in 2nd iteration.
-        // Double loops is bad with a capital Big-O
-        private static void AddEmergencyAction(ICollection<EmergencyAction> emergencyActions,
+
+        private static IEnumerable<EmergencyAction> AddDefaultEmergencyActions()
+        {
+            return new List<EmergencyAction>
+            {
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InTheEyeText,
+                    EmergencySubtext = EmergencyActionConstants.InTheEyeSubtext,
+                    Action = EmergencyActionConstants.InhaledNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InTheMouthText,
+                    EmergencySubtext = null,
+                    Action = EmergencyActionConstants.InTheMouthNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InhaledText,
+                    EmergencySubtext = null,
+                    Action = EmergencyActionConstants.InhaledNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.OnTheSkinText,
+                    EmergencySubtext = EmergencyActionConstants.OnTheSkinSubtext,
+                    Action = EmergencyActionConstants.OnTheSkinText
+                }
+            };
+        }
+
+        private static IEnumerable<EmergencyAction> AddSpecialEmergencyActions(
             IEnumerable<ChemicalHandler> chemicalData)
         {
+            var specialEmergencyActions = new List<EmergencyAction>();
+                
             chemicalData.ToList().ForEach(chemical =>
             {
                 chemical.EmergencyActions?.ToList().ForEach(action =>
                 {
-                    emergencyActions.Add(new EmergencyAction
+                    specialEmergencyActions.Add(new EmergencyAction()
                     {
+                        Chemical = chemical.Name,
                         Emergency = action.Emergency,
+                        EmergencySubtext = action.EmergencySubtext,
                         Action = action.Action
                     });
                 });
             });
+            
+            return specialEmergencyActions;
         }
     }
 }
