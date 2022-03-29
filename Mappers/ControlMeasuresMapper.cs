@@ -7,29 +7,46 @@ namespace rischy.assessment_generator.Mappers
 {
     public class ControlMeasuresMapper
     {
-        public ControlMeasuresMapper() {}
-        
-        public IEnumerable<string> Map(IEnumerable<ChemicalHandler> chemicalData)
+        public IEnumerable<ControlMeasure> Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var listOfControlMeasures = new List<string>();
-
-            AddControlMeasure(listOfControlMeasures, chemicalData);
-            
-            return listOfControlMeasures.Distinct();
-        }
-        
-        // 1st Iteration
-        // TODO Add chemical names to Control Measures string in next iteration
-        private static void AddControlMeasure(ICollection<string> listOfControlMeasures, IEnumerable<ChemicalHandler> chemicalData)
-        {
-            chemicalData.ToList().ForEach(chemical =>
+            return new List<ControlMeasure>()
             {
-                if (chemical.ControlMeasures.LowQuantity) listOfControlMeasures.Add(ControlMeasuresConstants.LowQuanity);
-                if (chemical.ControlMeasures.LowConcentration) listOfControlMeasures.Add(ControlMeasuresConstants.LowConcentration);
-                if (chemical.ControlMeasures.Goggles) listOfControlMeasures.Add(ControlMeasuresConstants.Googles);
-                if (chemical.ControlMeasures.Gloves) listOfControlMeasures.Add(ControlMeasuresConstants.Googles);
-                if (chemical.ControlMeasures.WashHands) listOfControlMeasures.Add(ControlMeasuresConstants.WashHands);
-            });
+                MapChemicalsThatRequireGoggles(chemicalData),
+                MapChemicalsThatRequireGloves(chemicalData),
+                MapChemicalsThatRequireFumeCupboard(chemicalData),
+            };
+        }
+
+        private static ControlMeasure? MapChemicalsThatRequireGoggles(IEnumerable<ChemicalHandler> chemicalData)
+        {
+            var chemicalsThatRequireGoogles = chemicalData.Where(chemical => chemical.ControlMeasures.Goggles);
+
+            return MapControlMeasure(ControlMeasuresConstants.Goggles, chemicalsThatRequireGoogles);
+        }
+
+        private static ControlMeasure? MapChemicalsThatRequireGloves(IEnumerable<ChemicalHandler> chemicalData)
+        {
+            var chemicalsThatRequireGoogles = chemicalData.Where(chemical => chemical.ControlMeasures.Gloves);
+
+            return MapControlMeasure(ControlMeasuresConstants.Gloves, chemicalsThatRequireGoogles);
+        }
+
+        private static ControlMeasure? MapChemicalsThatRequireFumeCupboard(IEnumerable<ChemicalHandler> chemicalData)
+        {
+            var chemicalsThatRequireGoogles = chemicalData.Where(chemical => chemical.ControlMeasures.FumeCupboard);
+
+            return MapControlMeasure(ControlMeasuresConstants.FumeCupboard, chemicalsThatRequireGoogles);
+        }
+
+        private static ControlMeasure? MapControlMeasure(string controlMeasure, IEnumerable<ChemicalHandler> matchingChemicals)
+        {
+            return matchingChemicals.Any()
+                ? new ControlMeasure()
+                {
+                    Control = controlMeasure,
+                    Chemicals = matchingChemicals.Select(chemical => chemical.Name)
+                }
+                : null;
         }
     }
 }
