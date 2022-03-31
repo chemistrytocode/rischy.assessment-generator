@@ -20,12 +20,12 @@ builder.Services.AddScoped<RiskAssessmentService>();
 builder.Services.AddSingleton<ControlMeasuresMapper>();
 builder.Services.AddSingleton<EmergencyActionsMapper>();
 builder.Services.AddSingleton<HazardTableMapper>();
+builder.Services.AddSingleton<DisposalRecommendationsMapper>();
 builder.Services.AddScoped<RiskAssessmentResponseBuilder>();
 
 // Add controllers
 builder.Services.AddControllers()
     .AddJsonOptions(options => options.JsonSerializerOptions.IgnoreNullValues = true);
-
 
 // Add swagger
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -10,21 +10,21 @@ namespace rischy.assessment_generator.Builders
         private readonly HazardTableMapper _hazardTableMapper;
         private readonly ControlMeasuresMapper _controlMeasuresMapper;
         private readonly EmergencyActionsMapper _emergencyActionsMapper;
-
+        private readonly DisposalRecommendationsMapper _disposalRecommendationsMapper;
 
         public RiskAssessmentResponseBuilder(
             HazardTableMapper hazardTableMapper,
             ControlMeasuresMapper controlMeasuresMapper,
-            EmergencyActionsMapper emergencyActionsMapper)
+            EmergencyActionsMapper emergencyActionsMapper,
+            DisposalRecommendationsMapper disposalRecommendationsMapper)
         {
             _riskAssessment = new RiskAssessment();
             _hazardTableMapper = hazardTableMapper;
             _controlMeasuresMapper = controlMeasuresMapper;
             _emergencyActionsMapper = emergencyActionsMapper;
+            _disposalRecommendationsMapper = disposalRecommendationsMapper;
         }
         
-        // Builder pattern FTW!.
-        // TODO: Pass chemicals to dynamically generate payloads, prototype is currently returning hard coded responses.
         public RiskAssessmentResponseBuilder WithChemicalHazardTable(IEnumerable<ChemicalHandler> chemicalData)
         {
             var mappedChemicalHazardTable = _hazardTableMapper.Map(chemicalData);
@@ -39,13 +39,20 @@ namespace rischy.assessment_generator.Builders
             return this;
         }
 
-        public RiskAssessmentResponseBuilder WithEmergencyProcedures(IEnumerable<ChemicalHandler> chemicalData)
+        public RiskAssessmentResponseBuilder WithEmergencyActions(IEnumerable<ChemicalHandler> chemicalData)
         {
             var mappedEmergencyResponses = _emergencyActionsMapper.Map(chemicalData);
             _riskAssessment.EmergencyActions = mappedEmergencyResponses;
             return this;
         }
         
+        public RiskAssessmentResponseBuilder WithDisposalRecommendations(IEnumerable<ChemicalHandler> chemicalData)
+        {
+            var mappedDisposalRecommendations = _disposalRecommendationsMapper.Map(chemicalData);
+            _riskAssessment.DisposalRecommendations = mappedDisposalRecommendations;
+            return this;
+        }
+
         public RiskAssessment Build()
         {
             return _riskAssessment;

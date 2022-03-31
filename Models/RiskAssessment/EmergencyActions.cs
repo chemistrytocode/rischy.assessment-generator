@@ -1,8 +1,14 @@
+using System.Collections.Generic;
+
 namespace rischy.assessment_generator.Models
 {
-    public record EmergencyAction
+    public record EmergencyActions
     {
-        public string? Emergency { get; set; }
-        public string? Action { get; set; }
+        public IEnumerable<EmergencyAction> DefaultEmergencyActions { get; set; }
+        
+        public IEnumerable<ChemicalEmergencyAction>? ChemicalEmergencyActions { get; set; }
+        
+        public string EscalationStatement { get; set; }
+ 
     }
 }

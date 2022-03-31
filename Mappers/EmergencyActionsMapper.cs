@@ -1,38 +1,92 @@
 using System.Collections.Generic;
 using System.Linq;
+using rischy.assessment_generator.Constants;
 using rischy.assessment_generator.Models;
 
 namespace rischy.assessment_generator.Mappers
 {
     public class EmergencyActionsMapper
     {
-        public EmergencyActionsMapper() { }
-
-        public IEnumerable<EmergencyAction> Map(IEnumerable<ChemicalHandler> chemicalData)
+        public EmergencyActions Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var emergencyActions = new List<EmergencyAction>();
-
-            AddEmergencyAction(emergencyActions, chemicalData);
-
-            return emergencyActions.Distinct();
+            return new EmergencyActions()
+            {
+                DefaultEmergencyActions = AddDefaultEmergencyActions(),
+                ChemicalEmergencyActions = AddChemicalEmergencyActions(chemicalData),
+                EscalationStatement = EmergencyActionConstants.EscalationStatement
+            };
         }
-        
-        // TODO Refactor this in 2nd iteration.
-        // Double loops is bad with a capital Big-O
-        private static void AddEmergencyAction(ICollection<EmergencyAction> emergencyActions,
+
+        private static IEnumerable<EmergencyAction> AddDefaultEmergencyActions()
+        {
+            return new List<EmergencyAction>
+            {
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InTheEyeEmergency,
+                    Action = EmergencyActionConstants.InTheEyeAction,
+                    ActionSubText = EmergencyActionConstants.InTheEyeActionSubText,
+                    ActionNotes = EmergencyActionConstants.InTheEyeNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InTheMouthEmergency,
+                    Action = EmergencyActionConstants.InTheMouthAction,
+                    ActionNotes = EmergencyActionConstants.InTheMouthNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.InhaledEmergency,
+                    Action = EmergencyActionConstants.InhaledAction,
+                    ActionSubText = EmergencyActionConstants.InhaledActionSubText,
+                    ActionNotes = EmergencyActionConstants.InhaledNotes
+                },
+                new EmergencyAction()
+                {
+                    Emergency = EmergencyActionConstants.OnTheSkinEmergency,
+                    Action = EmergencyActionConstants.OnTheSkinAction,
+                    ActionSubText = EmergencyActionConstants.OnTheSkinActionSubtext,
+                    ActionNotes = EmergencyActionConstants.OnTheSkinNotes
+                }
+            };
+        }
+
+        private static IEnumerable<ChemicalEmergencyAction>? AddChemicalEmergencyActions(
             IEnumerable<ChemicalHandler> chemicalData)
         {
+            var specialEmergencyActions = new List<ChemicalEmergencyAction>();
+                
             chemicalData.ToList().ForEach(chemical =>
             {
-                chemical.EmergencyActions?.ToList().ForEach(action =>
+                if (chemical.EmergencyActions != null && chemical.EmergencyActions.Any())
                 {
-                    emergencyActions.Add(new EmergencyAction
+                    specialEmergencyActions.Add(new ChemicalEmergencyAction()
                     {
-                        Emergency = action.Emergency,
-                        Action = action.Action
+                        Chemical = chemical.Name,
+                        ChemicalEmergencyActions = MapEmergencyActionsForChemical(chemical)
                     });
+                }
+            });
+
+            return specialEmergencyActions.Any() ? specialEmergencyActions : null;
+        }
+
+        private static IEnumerable<EmergencyAction> MapEmergencyActionsForChemical(ChemicalHandler chemical)
+        {
+            var chemicalEmergencyActions = new List<EmergencyAction>();
+            
+            chemical.EmergencyActions?.ToList().ForEach(emergencyAction =>
+            {
+                chemicalEmergencyActions.Add(new EmergencyAction()
+                {
+                    Emergency = emergencyAction.Emergency,
+                    Action = emergencyAction.Action,
+                    ActionSubText = emergencyAction.ActionSubText,
+                    ActionNotes = emergencyAction.ActionNotes
                 });
             });
+
+            return chemicalEmergencyActions;
         }
     }
 }

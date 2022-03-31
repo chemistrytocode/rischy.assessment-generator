@@ -26,7 +26,8 @@ namespace rischy.assessment_generator.Services
             var riskAssessmentResponse = _riskAssessmentResponseBuilder
                 .WithChemicalHazardTable(hazardData)
                 .WithControlMeasures(hazardData)
-                .WithEmergencyProcedures(hazardData)
+                .WithEmergencyActions(hazardData)
+                .WithDisposalRecommendations(hazardData)
                 .Build();
 
             return new JsonResult(riskAssessmentResponse) {StatusCode = (int) HttpStatusCode.OK};

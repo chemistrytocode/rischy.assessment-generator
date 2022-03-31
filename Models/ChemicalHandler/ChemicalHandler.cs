@@ -6,5 +6,7 @@ namespace rischy.assessment_generator.Models
     {
         public ControlMeasures ControlMeasures { get; set; }
         public IEnumerable<EmergencyAction>? EmergencyActions { get; set; }
+        public Disposal Disposal { get; set; }
+
     }
 }
