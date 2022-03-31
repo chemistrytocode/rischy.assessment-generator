@@ -22,6 +22,6 @@ namespace rischy.assessment_generator.Constants
         public const string OnTheSkinActionSubtext = "(with water for at least 20 minutes)";
         public const string OnTheSkinNotes = "In addition wipe/brush off excess and remove contaminated clothing or jewellery";
 
-        public const string EscalationStatement = "If any symptoms from the result of using chemicals appear call severe call 111/999";
+        public const string EscalationStatement = "If any symptoms from the result of using chemicals appear severe call 111/999";
     }
 }

@@ -9,12 +9,14 @@ namespace rischy.assessment_generator.Mappers
     {
         public IEnumerable<ControlMeasure> Map(IEnumerable<ChemicalHandler> chemicalData)
         {
-            return new List<ControlMeasure>()
+            var controlMeasures = new List<ControlMeasure>()
             {
                 MapChemicalsThatRequireGoggles(chemicalData),
                 MapChemicalsThatRequireGloves(chemicalData),
                 MapChemicalsThatRequireFumeCupboard(chemicalData),
             };
+
+            return controlMeasures.Where(controlMeasure => controlMeasure != null);
         }
 
         private static ControlMeasure? MapChemicalsThatRequireGoggles(IEnumerable<ChemicalHandler> chemicalData)
