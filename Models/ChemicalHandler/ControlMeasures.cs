@@ -5,5 +5,6 @@ namespace rischy.assessment_generator.Models
         public bool Goggles { get; set; }
         public bool Gloves { get; set; }
         public bool FumeCupboard { get; set; }
+        public bool AvoidFlames { get; set; }
     }
 }
