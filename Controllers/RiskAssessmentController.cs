@@ -7,11 +7,11 @@ namespace rischy.assessment_generator.Controllers
 {
     [ApiController]
     [Route("/risk-assessment")]
-    public class StockController : Controller
+    public class RiskAssessmentController : Controller
     {
         private readonly RiskAssessmentService _riskAssessmentService;
         
-        public StockController(RiskAssessmentService riskAssessmentService) => _riskAssessmentService = riskAssessmentService;
+        public RiskAssessmentController(RiskAssessmentService riskAssessmentService) => _riskAssessmentService = riskAssessmentService;
         
         [HttpGet(Name = "FabricateRiskAssessment")]
         public async Task<IActionResult> FabricateRiskAssessment(string chemicalIds, CancellationToken cancellationToken)

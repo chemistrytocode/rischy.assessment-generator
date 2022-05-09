@@ -17,10 +17,10 @@ builder.Services.AddHttpClient<ChemicalHandlerService>();
 
 // Add services
 builder.Services.AddScoped<RiskAssessmentService>();
-builder.Services.AddSingleton<ControlMeasuresMapper>();
-builder.Services.AddSingleton<EmergencyActionsMapper>();
-builder.Services.AddSingleton<HazardTableMapper>();
-builder.Services.AddSingleton<DisposalRecommendationsMapper>();
+builder.Services.AddScoped<ControlMeasuresMapper>();
+builder.Services.AddScoped<EmergencyActionsMapper>();
+builder.Services.AddScoped<HazardTableMapper>();
+builder.Services.AddScoped<DisposalRecommendationsMapper>();
 builder.Services.AddScoped<RiskAssessmentResponseBuilder>();
 
 // Add controllers
