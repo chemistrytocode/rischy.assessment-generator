@@ -5,5 +5,6 @@ namespace rischy.assessment_generator.Constants
         public const string Goggles = "Use eye protection";
         public const string Gloves = "Use gloves";
         public const string FumeCupboard = "Use a fume cupboard";
+        public const string AvoidFlames = "Avoid heat and open flames";
     }
 }

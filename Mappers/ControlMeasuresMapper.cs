@@ -14,6 +14,7 @@ namespace rischy.assessment_generator.Mappers
                 MapChemicalsThatRequireGoggles(chemicalData),
                 MapChemicalsThatRequireGloves(chemicalData),
                 MapChemicalsThatRequireFumeCupboard(chemicalData),
+                MapChemicalsThatRequireAvoidingFlames(chemicalData)
             };
 
             return controlMeasures.Where(controlMeasure => controlMeasure != null);
@@ -28,9 +29,9 @@ namespace rischy.assessment_generator.Mappers
 
         private static ControlMeasure? MapChemicalsThatRequireGloves(IEnumerable<ChemicalHandler> chemicalData)
         {
-            var chemicalsThatRequireGoogles = chemicalData.Where(chemical => chemical.ControlMeasures.Gloves);
+            var chemicalsThatRequireGloves = chemicalData.Where(chemical => chemical.ControlMeasures.Gloves);
 
-            return MapControlMeasure(ControlMeasuresConstants.Gloves, chemicalsThatRequireGoogles);
+            return MapControlMeasure(ControlMeasuresConstants.Gloves, chemicalsThatRequireGloves);
         }
 
         private static ControlMeasure? MapChemicalsThatRequireFumeCupboard(IEnumerable<ChemicalHandler> chemicalData)
@@ -38,6 +39,13 @@ namespace rischy.assessment_generator.Mappers
             var chemicalsThatRequireGoogles = chemicalData.Where(chemical => chemical.ControlMeasures.FumeCupboard);
 
             return MapControlMeasure(ControlMeasuresConstants.FumeCupboard, chemicalsThatRequireGoogles);
+        }
+        
+        private static ControlMeasure? MapChemicalsThatRequireAvoidingFlames(IEnumerable<ChemicalHandler> chemicalData)
+        {
+            var chemicalsThatRequireAvoidingFlames = chemicalData.Where(chemical => chemical.ControlMeasures.AvoidFlames);
+
+            return MapControlMeasure(ControlMeasuresConstants.AvoidFlames, chemicalsThatRequireAvoidingFlames);
         }
 
         private static ControlMeasure? MapControlMeasure(string controlMeasure, IEnumerable<ChemicalHandler> matchingChemicals)
