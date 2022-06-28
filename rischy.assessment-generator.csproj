@@ -9,8 +9,32 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Unit\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Unit\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Unit\obj\rischy.assessment-generator.Tests.Unit.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Functional\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Functional\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Functional\obj\rischy.assessment-generator.Tests.Functional.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Unit\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Unit\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="Tests\rischy.assessment-generator.Tests.Unit\obj\rischy.assessment-generator.Tests.Unit.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Functional\obj\project.assets.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Functional\obj\project.packagespec.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Functional\obj\rischy.assessment-generator.Tests.Functional.csproj.nuget.dgspec.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Unit\bin\Debug\net6.0\rischy.assessment-generator.Tests.Unit.deps.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Unit\bin\Debug\net6.0\rischy.assessment-generator.Tests.Unit.runtimeconfig.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Functional\bin\Debug\net6.0\rischy.assessment-generator.Tests.Functional.deps.json" />
+    <_ContentIncludedByDefault Remove="rischy.assessment-generator.Tests.Functional\bin\Debug\net6.0\rischy.assessment-generator.Tests.Functional.runtimeconfig.json" />
   </ItemGroup>
 
 </Project>
